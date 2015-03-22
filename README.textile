@@ -1,6 +1,6 @@
 h1. rah_comments
 
-"Download":https://github.com/gocom/rah_comments/releases | "Packagist":https://packagist.org/packages/rah/rah_comments | "Donate":http://rahforum.biz/donate/rah_comments
+"Download":https://github.com/gocom/rah_comments/releases | "Packagist":https://packagist.org/packages/rah/rah_comments | "Issues":https://github.com/gocom/rah_comments/issues | "Support forum":http://forum.textpattern.com/viewtopic.php?id=26126 | "Donate":http://rahforum.biz/donate/rah_comments
 
 Allows you to paginate comments like articles. In other words, it outputs pagination and pg numbers below comments. You can style pagination with various attributes and ofcorse with a CSS-styling magic.
 
