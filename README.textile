@@ -4,6 +4,8 @@ h1. rah_comments
 
 Rah_comments lets you to paginate "Textpattern CMS'":http://textpattern.com "comment lists":http://www.textpattern.net/wiki/index.php?title=comments, splitting the long endless list of comments into multiple pages with fully customisable navigation.
 
+The plugin is a module for "etc_pagination":https://github.com/bloatware/etc-pagination, extending the core comment system and letting etc_pagination to work with it. Rah_comments does the background work such as URL routing and comment calculation, while etc_pagination takes care of rendering the pagination.
+
 h2. Install
 
 Using "Composer":https://getcomposer.org:
@@ -14,142 +16,89 @@ Or "download":https://github.com/gocom/rah_comments/releases a plugin package.
 
 h2. Requirements
 
-* PHP 5.2.0 or newer.
 * Textpattern 4.4.1 or newer.
+* "etc_pagination":https://github.com/bloatware/etc-pagination
+* PHP 5.3.0 or newer.
 
-h2. Usage
+h2. Basics
 
-The basic method stands: paste plugin code to the plugin install textarea and run the automatic setup. Activate the plugin, and you are ready to use the new tag, <txp:rah_comments /> like others.
+Rah_comments is used together with etc_pagination to generate pagination for article comments, and comes with few tags that make core comment system and etc_pagination fully compatible.
 
-After the installation, the tag, <txp:rah_comments />, should be used instead of the regular core comments tag, <txp:comments /> – just replace it with <txp:rah_comments /> with your desired attributes, styles and so on.
+All-in-all, rah_comments takes care of providing etc_pagination page count it uses to figure out what it needs to render, rewrites and reroutes comment URLs and smoothens the comment submissions process.
 
-h2. Attributes
+Two tags are included; @rah_comments_numpages@ - the main that which acts as the etc_pagination glue and @rah_recent_comments@, a replacement tag for "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
 
-h3. rah_comments
+The most basic usage case would involve calculating the number of pages using rah_comments, passing the value to etc_pagination and then using the core "comments":http://www.textpattern.net/wiki/index.php?title=comments tag with a correct @offset@ attribute passed to it:
 
-The tag is @<txp:rah_comments />@ and attributes for it follow:
+bc. <txp:variable name="numPages" value='<txp:rah_comments_numpages limit="10" />' />
+<txp:etc_pagination pages='<txp:variable name="numPages" />' />
+<txp:comments offset='<txp:etc_offset pageby="10" />' limit="10" />
 
-h4. Normal comment related attributes
+The above is similar to any etc_pagination use case, but instead of using it's @etc_numpages@, we're using @rah_comments_numpages@.
 
-*form*
-Form to output the comments.
-Default: @form="comments"@ Example: @"rah_comments"@.
+h2. Tags and attributes
 
-*sort*
-How to sort the resulting list. Available values: discussid (comment ID#), parentid (article ID#), name, email, web, ip (IP address), posted, message, rand() (random).
-Default: @sort="posted asc"@ Example: @"name desc"@.
+h3. rah_comments_numpages
 
-*wraptag*
-(X)HTML tag (without brackets) to wrap around the comment list.
-Default: @wraptag=""@ (unset) @Example: "ul"@.
+bc. <txp:rah_comments_numpages limit="10" />
 
-*break*
-(X)HTML tag (without brackets) or string used to separate comments.
-Default: @break=""@ (unset) Example: @"li"@.
+Calculates and returns the number of comment pages, while doing some necessary background tasks. The number of pages is calculated based on the provided offset and limit attributes, and the resulting value should be passed to etc_pagination or similar pagination generator.
 
-*class*
-(X)HTML class attribute to be applied to wraptag.
-Default: @class=""@ Example: @"comment"@
+To the pagination to work properly, the tag needs that two attributes, @limit@ and @sort@, are identically mirrored to match the values used in the paginated @comments@ tag.
 
-*breakclass*
-(X)HTML class attribute to be applied to break (when value supplied is a tag).
-Default: @breakclass=""@ (unset) Example: @"comment"@.
-
-*offset*
-The number of comments to skip at the first page. Should always be zero (0).
-Default: @offset="0"@ Example: @"5"@.
+h4. Attributes
 
 *limit*
-The number of comments to display per page.
-Default: @limit="10"@ Example: @"5"@.
+Number of comments displayed per page. This value should be identical to the @limit@ you are using on the "comments":http://www.textpattern.net/wiki/index.php?title=comments tag.
+Default: @"10"@ Example: @limit="5"@
 
-h4. Pagination related attributes
+*sort*
+Comment sorting criteria. This value should be identical to the @sort@ attribute you are using on the "comments":http://www.textpattern.net/wiki/index.php?title=comments tag, if you are using any.
+Default: @"posted asc"@ Example: @sort="posted desc"@
 
-*prepend*
-Show the page and navigation links before comments.
-Default: @prepend="1"@ (yes) Example: @""@ (no).
+*offset*
+Number of comments skipped.
+Default: @"0"@ Example: @offset="5"@
 
-*append*
-Show the page and navigation links after comment list.
-Default: @append="1"@ (yes) Example: @""@ (no).
-
-*pg_wraptag*
-(X)HTML tag (without brackets) to wrap around the pagination links and numbers. Default is unset.
-Default: @pg_wraptag="ul"@ Example: @"p"@.
-
-*pg_break*
-(X)HTML tag (without brackets) or string used to separate pagination links. Default is unset.
-Default: @pg_wraptag="li"@ Example: @""@.
-
-*pg_class*
-(X)HTML class attribute to be applied to pg_wraptag element.
-Default: @class=""@ Example: @"pg-class"@.
-
-*pg_breakclass*
-(X)HTML class attribute to be applied to pg_break element.
-Default: class="" Example: "myclass".
-
-*label_next*
-Label text applied for next link.
-Default: @label_next="&gt;&gt;"@ Example: @"Next comments"@.
-
-*label_prev*
-Label text applied for prev link.
-Default: @label_prev="&lt;&lt;"@ Example: @"Prev comments"@.
-
-*class_next*
-(X)HTML class attribute to be applied to next link.
-Default: @class_next=""@ Example: @"myclass"@.
-
-*class_prev*
-(X)HTML class attribute to be applied to prev link.
-Default: @class_prev=""@ Example: @"myclass"@.
-
-*showalways*
-Show page number links always, even if there is only a one page.
-Default: @showalways="1"@ (yes) Example: @""@ (no).
+*parameter*
+The query string parameter the page number is passed in. This value should be set to match the parameter, @pg_counter@, you are using with @etc_pagination@.
+Default: @"pg"@ Example: @parameter="pg"@
 
 h3. rah_recent_comments
 
-Outputs list of recent comments, like the default inbuild recent_comments. The tag is @<txp:rah_recent_comments />@ and attributes for it follow:
+bc. <txp:rah_recent_comments>
+    ...contained statement...
+</txp:rah_recent_comments>
 
-*comments_limit*
-Set this to be same as the limit-value in the @<txp:rah_comments />@. This tells to the tag how many comments there is in a one page.
-Default: @comments_limit="10"@ Example: @"5"@
-
-*comments_sort*
-Set this to be same as the sort-value in the <txp:rah_comments />. This tells to the tag in which order the comments are.
-Default: @comments_sort="posted asc"@ Example: @"posted desc"@
-
-*wraptag*
-(X)HTML tag (without brackets) to wrap around the comment list.
-Default: @wraptag=""@ (unset) Example: @"ul"@.
-
-*break*
-(X)HTML tag (without brackets) or string used to separate comments.
-Default: @break="br"@ Example: @""@.
-
-*class*
-(X)HTML class attribute to be applied to wraptag.
-Default: @class="recent_comments"@ Example: @"comment"@
-
-*label*
-Label for the top of the list.
-Default @label=""@ (unset) Example: @"recent_comments"@
-
-*labeltag*
-(X)HTML tag (without brackets) to wrap around label.
-Default: @labeltag=""@ (unset) Example: @"h3"@.
-
-*limit*
-Number of comments to display.
-Default: @limit="10"@ Example: @"5"@.
+Renders list of recent comments. The tag is identical drop-in-replacement to "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
 
 h2. Example
 
-bc. <txp:rah_comments wraptag="div" pg_wraptag="p" />
+h3. Basic pagination
+
+bc. <txp:variable name="numPages" value='<txp:rah_comments_numpages limit="10" />' />
+<txp:etc_pagination pages='<txp:variable name="numPages" />' />
+<txp:comments offset='<txp:etc_offset pageby="10" />' limit="10" />
+
+The above renders 10 comments per page and displays page numbers above the comment list.
+
+h3. Recent comments
+
+bc. <txp:rah_recent_comments limit="10" wraptag="ul" break="li" />
+
+The above renders last 10 comments on the website.
 
 h2. Changelog
+
+h3. Version 0.5.0 - upcoming
+
+* Rewritten as "etc_pagination":https://github.com/bloatware/etc-pagination module.
+* Removed: @rah_comments@ tag.
+* Added: @rah_comments_numpages@ tag.
+* Updated: now shows the correct comment page after new comment submissions.
+* Updated: rah_recent_comments to support same features as the core recent_comments tag.
+* Performance optimisations.
+* Released as "Composer":http://getcomposer.org package.
 
 h3. Version 0.4 - 2008/09/14
 
