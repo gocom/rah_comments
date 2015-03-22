@@ -1,0 +1,172 @@
+h1. rah_comments
+
+Allows you to paginate comments like articles. In other words, it outputs pagination and pg numbers below comments. You can style pagination with various attributes and ofcorse with a CSS-styling magic.
+
+* Version: 0.4
+* Updated: 2008/09/14 6:00 AM GMT+2
+
+The plugin, rah_comments, works exatly same way like the in build comment listing, txp:comments, but with one addition: pagination, navigation and pagenumbers. Yes, the plugin can be used to paginate comments. You can style pagination with various attributes and ofcorse with a CSS-styling magic. Works only in individual article pages, not in a section, nor an article list pages.
+
+h2. List of features
+
+* Paginated comment listing for individual articles
+* Pagenumbers and prev & next links
+
+h2. Requirements
+
+* TXP 4.0.6+
+
+h2. Installation and usage
+
+The basic method stands: paste plugin code to the plugin install textarea and run the automatic setup. Activate the plugin, and you are ready to use the new tag, <txp:rah_comments /> like others.
+
+After the installation, the tag, <txp:rah_comments />, should be used instead of the regular core comments tag, <txp:comments /> – just replace it with <txp:rah_comments /> with your desired attributes, styles and so on.
+
+h2. Attributes
+
+h3. rah_comments
+
+The tag is @<txp:rah_comments />@ and attributes for it follow:
+
+h4. Normal comment related attributes
+
+*form*
+Form to output the comments.
+Default: @form="comments"@ Example: @"rah_comments"@.
+
+*sort*
+How to sort the resulting list. Available values: discussid (comment ID#), parentid (article ID#), name, email, web, ip (IP address), posted, message, rand() (random).
+Default: @sort="posted asc"@ Example: @"name desc"@.
+
+*wraptag*
+(X)HTML tag (without brackets) to wrap around the comment list.
+Default: @wraptag=""@ (unset) @Example: "ul"@.
+
+*break*
+(X)HTML tag (without brackets) or string used to separate comments.
+Default: @break=""@ (unset) Example: @"li"@.
+
+*class*
+(X)HTML class attribute to be applied to wraptag.
+Default: @class=""@ Example: @"comment"@
+
+*breakclass*
+(X)HTML class attribute to be applied to break (when value supplied is a tag).
+Default: @breakclass=""@ (unset) Example: @"comment"@.
+
+*offset*
+The number of comments to skip at the first page. Should always be zero (0).
+Default: @offset="0"@ Example: @"5"@.
+
+*limit*
+The number of comments to display per page.
+Default: @limit="10"@ Example: @"5"@.
+
+h4. Pagination related attributes
+
+*prepend*
+Show the page and navigation links before comments.
+Default: @prepend="1"@ (yes) Example: @""@ (no).
+
+*append*
+Show the page and navigation links after comment list.
+Default: @append="1"@ (yes) Example: @""@ (no).
+
+*pg_wraptag*
+(X)HTML tag (without brackets) to wrap around the pagination links and numbers. Default is unset.
+Default: @pg_wraptag="ul"@ Example: @"p"@.
+
+*pg_break*
+(X)HTML tag (without brackets) or string used to separate pagination links. Default is unset.
+Default: @pg_wraptag="li"@ Example: @""@.
+
+*pg_class*
+(X)HTML class attribute to be applied to pg_wraptag element.
+Default: @class=""@ Example: @"pg-class"@.
+
+*pg_breakclass*
+(X)HTML class attribute to be applied to pg_break element.
+Default: class="" Example: "myclass".
+
+*label_next*
+Label text applied for next link.
+Default: @label_next="&gt;&gt;"@ Example: @"Next comments"@.
+
+*label_prev*
+Label text applied for prev link.
+Default: @label_prev="&lt;&lt;"@ Example: @"Prev comments"@.
+
+*class_next*
+(X)HTML class attribute to be applied to next link.
+Default: @class_next=""@ Example: @"myclass"@.
+
+*class_prev*
+(X)HTML class attribute to be applied to prev link.
+Default: @class_prev=""@ Example: @"myclass"@.
+
+*showalways*
+Show page number links always, even if there is only a one page.
+Default: @showalways="1"@ (yes) Example: @""@ (no).
+
+h3. rah_recent_comments
+
+Outputs list of recent comments, like the default inbuild recent_comments. The tag is @<txp:rah_recent_comments />@ and attributes for it follow:
+
+*comments_limit*
+Set this to be same as the limit-value in the @<txp:rah_comments />@. This tells to the tag how many comments there is in a one page.
+Default: @comments_limit="10"@ Example: @"5"@
+
+*comments_sort*
+Set this to be same as the sort-value in the <txp:rah_comments />. This tells to the tag in which order the comments are.
+Default: @comments_sort="posted asc"@ Example: @"posted desc"@
+
+*wraptag*
+(X)HTML tag (without brackets) to wrap around the comment list.
+Default: @wraptag=""@ (unset) Example: @"ul"@.
+
+*break*
+(X)HTML tag (without brackets) or string used to separate comments.
+Default: @break="br"@ Example: @""@.
+
+*class*
+(X)HTML class attribute to be applied to wraptag.
+Default: @class="recent_comments"@ Example: @"comment"@
+
+*label*
+Label for the top of the list.
+Default @label=""@ (unset) Example: @"recent_comments"@
+
+*labeltag*
+(X)HTML tag (without brackets) to wrap around label.
+Default: @labeltag=""@ (unset) Example: @"h3"@.
+
+*limit*
+Number of comments to display.
+Default: @limit="10"@ Example: @"5"@.
+
+h2. Example
+
+bc. <txp:rah_comments wraptag="div" pg_wraptag="p" />
+
+h2. Changelog
+
+h3. Version 0.4
+
+* Added @<txp:rah_recent_comments />@ tag.
+
+h3. Version 0.3
+
+* Removed attributes: break_nav and break_pages.
+* Fixed messy url mode’s error: now works fully on messy.
+* Added attributes: pg_break, pg_break_class, prepend and append.
+* Now works in article lists, same way like <txp:comments />.
+* Better documention.
+
+h3. Version 0.2
+
+* Some minor bug fixes.
+* Removed some typos from documention.
+
+h3. Version 0.1
+
+* First release.

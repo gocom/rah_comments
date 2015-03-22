@@ -1,0 +1,14 @@
+{
+    "name": "rah_comments",
+    "description": "Paginated comments",
+    "version": "0.4",
+    "type": 0,
+    "author": "Jukka Svahn",
+    "author_uri": "http://rahforum.biz",
+    "order": 5,
+    "flags": 0,
+    "help": {"file" : ["./README.textile"]},
+    "code": {"file" : [
+        "./rah_comments.php"
+    ]}
+}
