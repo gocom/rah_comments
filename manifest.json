@@ -9,6 +9,6 @@
     "flags": 0,
     "help": {"file" : ["./README.textile"]},
     "code": {"file" : [
-        "./rah_comments.php"
+        "./src/Rah/Comments/Tags.php"
     ]}
 }
