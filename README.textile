@@ -70,7 +70,7 @@ bc. <txp:rah_recent_comments>
     ...contained statement...
 </txp:rah_recent_comments>
 
-Renders list of recent comments. The tag is identical drop-in-replacement to "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
+Renders list of recent comments. The tag is identical to "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
 
 h2. Example
 
