@@ -78,7 +78,7 @@ h4. Attributes
 Whether to apply the comment's id to the hyperlink tag (as the id attribute), setting this comment permanent link as the comment page anchor.
 Default: @"1"@ Example: @anchor="0"@
 
-h2. Example
+h2. Examples
 
 h3. Basic pagination
 
