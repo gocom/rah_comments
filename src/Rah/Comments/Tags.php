@@ -1,7 +1,7 @@
 <?php
 
 /*
- * rah_comments - Flat templates for Textpattern CMS
+ * rah_comments - Paginated article comments for Textpattern CMS
  * https://github.com/gocom/rah_comments
  *
  * Copyright (C) 2015 Jukka Svahn
