@@ -103,7 +103,7 @@ function rah_comments_numpages($atts)
             $_POST[$parameter] = $_GET[$parameter] = $page;
         }
 
-        // Prevents etc_paginate from picking up the 'commented' parameter.
+        // Prevent etc_pagination from picking up the 'commented' parameter.
 
         if ($commented) {
             $_POST['commented'] = gps('commented');
