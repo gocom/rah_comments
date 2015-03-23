@@ -119,31 +119,44 @@ function rah_comments_numpages($atts)
 }
 
 /**
- * Renders list of recent comments.
+ * Renders comment permlink.
  *
  * @param  array  $atts  Attributes
  * @param  string $thing Contained statement
  * @return string User markup
  */
 
-function rah_recent_comments($atts, $thing = null)
+function rah_comment_permlink($atts, $thing = null)
 {
-    $out = recent_comments($atts, $thing);
+    global $thisarticle, $thiscomment;
 
-    $out = preg_replace_callback(
-        '/(<a[^>]+href=")([^"#]+)#c([0-9]+)(")/i',
-        function ($m) {
+    assert_article();
+    assert_comment();
 
-            if (strpos($m[2], '?') === false) {
-                $sep = '?';
-            } else {
-                $sep = '&amp;';
-            }
+    extract(lAtts(array(
+        'anchor' => empty($thiscomment['has_anchor_tag']),
+    ), $atts));
 
-            return $m[1].$m[2].$sep.'rah_comments_id='.$m[3].'#c'.$m[3].$m[4];
-        },
-        $out
-    );
+    $permlink = permlinkurl($thisarticle);
+    $id = $thiscomment['discussid'];
 
-    return $out;
+    if (strpos($permlink, '?') === false) {
+        $sep = '?';
+    } else {
+        $sep = '&amp;';
+    }
+
+    $permlink .= $sep.'rah_comments_id='.$id.'#c'.$id;
+
+    if ($thing === null) {
+        return $permlink;
+    }
+
+    $atts = ' href="'.$permlink.'"';
+
+    if ($anchor) {
+        $atts .= ' id="c'.$id.'"';
+    }
+
+    return tag(parse($thing), 'a', $atts);
 }

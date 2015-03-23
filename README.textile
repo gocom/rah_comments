@@ -26,7 +26,7 @@ Rah_comments is used together with etc_pagination to generate pagination for art
 
 All-in-all, rah_comments takes care of providing etc_pagination page count it uses to figure out what it needs to render, rewrites and reroutes comment URLs and smoothens the comment submissions process.
 
-Two tags are included; @rah_comments_numpages@ - the main that which acts as the etc_pagination glue and @rah_recent_comments@, a replacement tag for "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
+Two tags are included; @rah_comments_numpages@ - the main that which acts as the etc_pagination glue and @rah_comment_permlink@, a replacement tag for "comment_permlink":http://www.textpattern.net/wiki/index.php?title=comment_permlink.
 
 The most basic usage case would involve calculating the number of pages using rah_comments, passing the value to etc_pagination and then using the core "comments":http://www.textpattern.net/wiki/index.php?title=comments tag with a correct @offset@ attribute passed to it:
 
@@ -64,13 +64,19 @@ Default: @"0"@ Example: @offset="5"@
 The query string parameter the page number is passed in. This value should be set to match the parameter, @pg_counter@, you are using with @etc_pagination@.
 Default: @"pg"@ Example: @parameter="pg"@
 
-h3. rah_recent_comments
+h3. rah_comment_permlink
 
-bc. <txp:rah_recent_comments>
+bc. <txp:rah_comment_permlink>
     ...contained statement...
-</txp:rah_recent_comments>
+</txp:rah_comment_permlink>
 
-Renders list of recent comments. The tag is identical to "recent_comments":http://www.textpattern.net/wiki/index.php?title=recent_comments.
+Renders comment permlink, used as "comment_permlink":http://www.textpattern.net/wiki/index.php?title=comment_permlink tag's replacement.
+
+h4. Attributes
+
+*anchor*
+Whether to apply the comment's id to the hyperlink tag (as the id attribute), setting this comment permanent link as the comment page anchor.
+Default: @"1"@ Example: @anchor="0"@
 
 h2. Example
 
@@ -84,7 +90,9 @@ The above renders 10 comments per page and displays page numbers above the comme
 
 h3. Recent comments
 
-bc. <txp:rah_recent_comments limit="10" wraptag="ul" break="li" />
+bc. <txp:recent_comments limit="10" wraptag="ul" break="li">
+    <txp:rah_comment_permlink><txp:comment_name link="0" /> (<txp:title />)</txp:rah_comment_permlink>
+</txp:recent_comments>
 
 The above renders last 10 comments on the website.
 
@@ -94,9 +102,10 @@ h3. Version 0.5.0 - upcoming
 
 * Rewritten as "etc_pagination":https://github.com/bloatware/etc-pagination module.
 * Removed: @rah_comments@ tag.
+* Removed: @rah_recent_comments@ tag.
 * Added: @rah_comments_numpages@ tag.
+* Added: @rah_comment_permlink@ tag.
 * Updated: now shows the correct comment page after new comment submissions.
-* Updated: rah_recent_comments to support same features as the core recent_comments tag.
 * Performance optimisations.
 * Released as "Composer":http://getcomposer.org package.
 
