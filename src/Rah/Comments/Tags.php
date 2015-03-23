@@ -132,7 +132,6 @@ function rah_recent_comments($atts, $thing = null)
 
     $out = preg_replace_callback(
         '/(<a[^>]+href=")([^"#]+)#c([0-9]+)(")/i',
-
         function ($m) {
 
             if (strpos($m[2], '?') === false) {
@@ -141,10 +140,8 @@ function rah_recent_comments($atts, $thing = null)
                 $sep = '&amp;';
             }
 
-            return $m[1].$m[2].
-                $sep.'rah_comments_id='.$m[3].'#c'.$m[3].$m[4];
+            return $m[1].$m[2].$sep.'rah_comments_id='.$m[3].'#c'.$m[3].$m[4];
         },
-
         $out
     );
 
